@@ -1,14 +1,4 @@
-package auth.ui;
-
-import auth.*;
-import auth.AuthService;
-import auth.AuthServiceImpl;
-import auth.DatabaseConfig;
-import auth.PasswordService;
-import auth.PasswordServiceImpl;
-import auth.User;
-import auth.UserDAO;
-
+package auth;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -26,6 +16,7 @@ public class ConsoleUI {
 
         while (true) {
             System.out.println("\n1. Register\n2. Login\n3. Exit");
+            System.out.println("Enter your choice: ");
             int choice = sc.nextInt();
             sc.nextLine();
 
