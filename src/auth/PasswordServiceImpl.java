@@ -1,14 +1,15 @@
 package auth;
 
-public class PasswordEncoder implements PasswordService {
+public class PasswordServiceImpl implements PasswordService {
+
 
     @Override
-    public String encode(String password) {
-        return password;
+    public boolean matches(String rawPassword, String hashedPassword) {
+        return hash(rawPassword).equals(hashedPassword);
     }
 
     @Override
-    public boolean matches(String rawPassword, String encodedPassword) {
-        return rawPassword.equals(encodedPassword);
+    public String hash(String rawPassword) {
+        return Integer.toString(rawPassword.hashCode());
     }
 }
