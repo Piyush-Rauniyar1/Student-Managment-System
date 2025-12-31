@@ -9,6 +9,9 @@ public class User {
         this.userID = userID;
         this.userName = userName;
     }
+    User(){
+
+    }
 
     public int getUserId() {
         return userID;
@@ -22,4 +25,11 @@ public class User {
         return password;
     }
 
+    public void setUsername(String username) {
+        this.userName = username;
+    }
+
+    public void setPassword(String hash) {
+        this.password = hash;
+    }
 }
