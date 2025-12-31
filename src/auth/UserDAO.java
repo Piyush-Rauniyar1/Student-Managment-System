@@ -2,10 +2,10 @@ package auth;
 
 import java.sql.*;
 
-public class JdbcUserRepository implements UserRepository {
+public class UserDAO implements UserRepository {
     Connection connection;
 
-    public JdbcUserRepository(Connection connection) {
+    public UserDAO(Connection connection) {
         this.connection = connection;
     }
 
