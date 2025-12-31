@@ -6,10 +6,8 @@ public class Student {
     private String rollNo;
     private String email;
 
-    // Default Constructor
     public Student() {}
 
-    // Parameterized Constructor
     public Student(int studentId, String name, String rollNo, String email) {
         this.studentId = studentId;
         this.name = name;
@@ -17,16 +15,35 @@ public class Student {
         this.email = email;
     }
 
-    // Getters and Setters
-    public int getStudentId() { return studentId; }
-    public void setStudentId(int studentId) { this.studentId = studentId; }
+    public int getStudentId() {
+        return studentId;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
 
-    public String getRollNo() { return rollNo; }
-    public void setRollNo(String rollNo) { this.rollNo = rollNo; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRollNo() {
+        return rollNo;
+    }
+
+    public void setRollNo(String rollNo) {
+        this.rollNo = rollNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
