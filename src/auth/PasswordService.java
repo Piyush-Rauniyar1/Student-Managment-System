@@ -1,6 +1,6 @@
 package auth;
 
-public interface AuthService {
-    String encode(String password);
-    boolean matches(String rawPassword, String encodedPassword);
+public interface PasswordService {
+    boolean matches(String rawPassword, String hashedPassword);
+    String hash(String rawPassword);
 }
