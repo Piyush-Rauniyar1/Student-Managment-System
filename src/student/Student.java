@@ -1,33 +1,15 @@
 package student;
 
-/**
- * Entity class representing a student.
- * Contains student details like name, roll number, and email.
- */
 public class Student {
     private int studentId;
     private String name;
     private String rollNo;
     private String email;
 
-    public Student() {
-    }
+    public Student() {}
 
     public Student(int studentId, String name, String rollNo, String email) {
         this.studentId = studentId;
-        this.name = name;
-        this.rollNo = rollNo;
-        this.email = email;
-    }
-
-    /**
-     * Parameterized constructor for creating a new student (without ID).
-     *
-     * @param name   Student's full name.
-     * @param rollNo Student's roll number.
-     * @param email  Student's email address.
-     */
-    public Student(String name, String rollNo, String email) {
         this.name = name;
         this.rollNo = rollNo;
         this.email = email;
@@ -63,10 +45,5 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (" + rollNo + ")";
     }
 }
