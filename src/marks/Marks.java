@@ -1,14 +1,24 @@
 package marks;
 
 public class Marks {
-
     private int marksId;
     private int studentId;
     private int courseId;
     private double marks;
     private String grade;
 
-    // Getter and Setter for marksId
+    public Marks() {
+    }
+
+    public Marks(int marksId, int studentId, int courseId, double marks, String grade) {
+        this.marksId = marksId;
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.marks = marks;
+        this.grade = grade;
+    }
+
+    // Getters and Setters
     public int getMarksId() {
         return marksId;
     }
@@ -17,7 +27,6 @@ public class Marks {
         this.marksId = marksId;
     }
 
-    // Getter and Setter for studentId
     public int getStudentId() {
         return studentId;
     }
@@ -26,7 +35,6 @@ public class Marks {
         this.studentId = studentId;
     }
 
-    // Getter and Setter for courseId
     public int getCourseId() {
         return courseId;
     }
@@ -35,7 +43,6 @@ public class Marks {
         this.courseId = courseId;
     }
 
-    // Getter and Setter for marks
     public double getMarks() {
         return marks;
     }
@@ -44,7 +51,6 @@ public class Marks {
         this.marks = marks;
     }
 
-    // Getter and Setter for grade
     public String getGrade() {
         return grade;
     }

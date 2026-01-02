@@ -1,25 +1,88 @@
 package marks;
 
+import database.DatabaseConnection;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MarksDAO {
 
-	public boolean addMarks(Marks marks) {
-		return true;
-	}
+    public boolean addMarks(Marks marks) {
+        String sql = "INSERT INTO marks (student_id, course_id, marks, grade) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	public boolean updateMarks(Marks marks) {
-    	return true;
-	}
+            pstmt.setInt(1, marks.getStudentId());
+            pstmt.setInt(2, marks.getCourseId());
+            pstmt.setDouble(3, marks.getMarks());
+            pstmt.setString(4, marks.getGrade());
 
-	public Marks getMarks(int studentId, int courseId) {
-	    return null;
-	}
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-	public List<Marks> getMarksByStudent(int studentId) {
-	    return new ArrayList<>();
-	}
+    public boolean updateMarks(Marks marks) {
+        String sql = "UPDATE marks SET marks = ?, grade = ? WHERE marks_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setDouble(1, marks.getMarks());
+            pstmt.setString(2, marks.getGrade());
+            pstmt.setInt(3, marks.getMarksId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Marks getMarks(int studentId, int courseId) {
+        String sql = "SELECT * FROM marks WHERE student_id = ? AND course_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, studentId);
+            pstmt.setInt(2, courseId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Marks(
+                        rs.getInt("marks_id"),
+                        rs.getInt("student_id"),
+                        rs.getInt("course_id"),
+                        rs.getDouble("marks"),
+                        rs.getString("grade"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Not found
+    }
+
+    public List<Marks> getMarksByStudent(int studentId) {
+        List<Marks> list = new ArrayList<>();
+        String sql = "SELECT * FROM marks WHERE student_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, studentId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Marks(
+                        rs.getInt("marks_id"),
+                        rs.getInt("student_id"),
+                        rs.getInt("course_id"),
+                        rs.getDouble("marks"),
+                        rs.getString("grade")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
-
-

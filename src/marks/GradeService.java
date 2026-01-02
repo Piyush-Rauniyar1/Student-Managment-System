@@ -2,20 +2,22 @@ package marks;
 
 public class GradeService {
 
-    // Calculate grade based on marks
     public String calculateGrade(double marks) {
-        if (marks >= 80) return "A";
-        else if (marks >= 60) return "B";
-        else if (marks >= 40) return "C";
-        else return "F";
+        if (marks >= 80)
+            return "A";
+        else if (marks >= 70)
+            return "B";
+        else if (marks >= 60)
+            return "C";
+        else if (marks >= 50)
+            return "D";
+        else
+            return "F";
     }
 
-    // Assign grade to Marks object
-    public boolean assignGrade(Marks marksObj) {
-        // Use getter to get marks
-        double marks = marksObj.getMarks();
-        // Use setter to set grade
-        marksObj.setGrade(calculateGrade(marks));
+    public boolean assignGrade(Marks marks) {
+        String grade = calculateGrade(marks.getMarks());
+        marks.setGrade(grade);
         return true;
     }
 }
