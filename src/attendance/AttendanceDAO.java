@@ -1,91 +1,54 @@
 package attendance;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttendanceDAO {
 
-    private Connection connection;
+    public void addAttendance(Attendance attendance) {
+        String sql = "INSERT INTO attendance (student_id, course_id, date, status) VALUES (?, ?, ?, ?)";
 
-    public AttendanceDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    // Mark attendance
-    public boolean markAttendance(Attendance attendance) {
-
-        if (attendanceExists(
-                attendance.getStudentId(),
-                attendance.getCourseId(),
-                attendance.getDate())) {
-            return false;
-        }
-
-        String sql = "INSERT INTO attendance(student_id, course_id, date, status) VALUES(?,?,?,?)";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection conn = ConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, attendance.getStudentId());
             ps.setInt(2, attendance.getCourseId());
-            ps.setDate(3, java.sql.Date.valueOf(attendance.getDate()));
+            ps.setDate(3, Date.valueOf(attendance.getDate()));
             ps.setString(4, attendance.getStatus());
-
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // Prevent duplicate attendance
-    public boolean attendanceExists(int studentId, int courseId, LocalDate date) {
-
-        String sql = "SELECT 1 FROM attendance WHERE student_id=? AND course_id=? AND date=?";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, studentId);
-            ps.setInt(2, courseId);
-            ps.setDate(3, java.sql.Date.valueOf(date));
-
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    // Attendance percentage
-    public double calculateAttendancePercentage(int studentId, int courseId) {
+    public List<Attendance> getAllAttendance() {
+        List<Attendance> list = new ArrayList<>();
+        String sql = "SELECT * FROM attendance";
 
-        String sql = """
-                SELECT COUNT(*) AS total,
-                SUM(CASE WHEN status='PRESENT' THEN 1 ELSE 0 END) AS present
-                FROM attendance
-                WHERE student_id=? AND course_id=?
-                """;
+        try (Connection conn = ConnectionUtil.getConnection();
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-            ps.setInt(1, studentId);
-            ps.setInt(2, courseId);
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                int total = rs.getInt("total");
-                int present = rs.getInt("present");
-                return total == 0 ? 0 : (present * 100.0) / total;
+            while (rs.next()) {
+                list.add(new Attendance(
+                        rs.getInt("attendance_id"),
+                        rs.getInt("student_id"),
+                        rs.getInt("course_id"),
+                        rs.getDate("date").toLocalDate(),
+                        rs.getString("status")
+                ));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return list;
     }
 }

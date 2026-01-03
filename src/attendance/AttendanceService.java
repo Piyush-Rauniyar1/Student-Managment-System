@@ -1,22 +1,22 @@
 package attendance;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class AttendanceService {
 
     private AttendanceDAO attendanceDAO;
 
-    public AttendanceService(AttendanceDAO attendanceDAO) {
-        this.attendanceDAO = attendanceDAO;
+    public AttendanceService() {
+        attendanceDAO = new AttendanceDAO();
     }
 
-    public boolean markPresent(int studentId, int courseId, LocalDate date) {
-        Attendance attendance = new Attendance(studentId, courseId, date, "PRESENT");
-        return attendanceDAO.markAttendance(attendance);
+    public void markAttendance(int studentId, int courseId, LocalDate date, String status) {
+        Attendance attendance = new Attendance(0, studentId, courseId, date, status);
+        attendanceDAO.addAttendance(attendance);
     }
 
-    public boolean markAbsent(int studentId, int courseId, LocalDate date) {
-        Attendance attendance = new Attendance(studentId, courseId, date, "ABSENT");
-        return attendanceDAO.markAttendance(attendance);
+    public List<Attendance> getAttendanceRecords() {
+        return attendanceDAO.getAllAttendance();
     }
 }
