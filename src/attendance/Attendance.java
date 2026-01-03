@@ -8,12 +8,10 @@ public class Attendance {
     private int studentId;
     private int courseId;
     private LocalDate date;
-    private String status; // "PRESENT" or "ABSENT"
+    private String status;
 
-    public Attendance() {
-    }
-
-    public Attendance(int studentId, int courseId, LocalDate date, String status) {
+    public Attendance(int attendanceId, int studentId, int courseId, LocalDate date, String status) {
+        this.attendanceId = attendanceId;
         this.studentId = studentId;
         this.courseId = courseId;
         this.date = date;
@@ -22,10 +20,6 @@ public class Attendance {
 
     public int getAttendanceId() {
         return attendanceId;
-    }
-
-    public void setAttendanceId(int attendanceId) {
-        this.attendanceId = attendanceId;
     }
 
     public int getStudentId() {
@@ -42,5 +36,16 @@ public class Attendance {
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attendanceId=" + attendanceId +
+                ", studentId=" + studentId +
+                ", courseId=" + courseId +
+                ", date=" + date +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
