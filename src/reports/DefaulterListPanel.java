@@ -12,8 +12,15 @@ import java.awt.*;
 import java.util.List;
 
 public class DefaulterListPanel extends JPanel {
-    private CourseDAO courseDAO;
-    private ReportDAO reportDAO;
+    private static final Color BACKGROUND_COLOR = new Color(246, 247, 248);
+    private static final Color CARD_BORDER_COLOR = new Color(226, 232, 240);
+    private static final Color HEADER_TEXT_COLOR = new Color(100, 116, 139);
+    private static final Color DANGER_COLOR = new Color(225, 29, 72);
+    private static final Color SUCCESS_COLOR = new Color(22, 163, 74);
+    private static final Color WARNING_COLOR = new Color(249, 115, 22);
+
+    private final CourseDAO courseDAO;
+    private final ReportDAO reportDAO;
     private JComboBox<Course> courseComboBox;
     private JSpinner thresholdSpinner;
     private JLabel countLabel;
@@ -28,30 +35,33 @@ public class DefaulterListPanel extends JPanel {
 
     private void initializeUI() {
         setLayout(new BorderLayout());
-        setBackground(new Color(246, 247, 248));
+        setBackground(BACKGROUND_COLOR);
         setBorder(new EmptyBorder(20, 30, 20, 30));
 
-        // Header
+        add(createHeaderPanel(), BorderLayout.NORTH);
+        add(new JScrollPane(createContentPanel()), BorderLayout.CENTER);
+    }
+
+    private JPanel createHeaderPanel() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(new Color(246, 247, 248));
+        header.setBackground(BACKGROUND_COLOR);
 
         JPanel titleBox = new JPanel(new GridLayout(2, 1));
-        titleBox.setBackground(new Color(246, 247, 248));
+        titleBox.setBackground(BACKGROUND_COLOR);
 
         JLabel title = new JLabel("Defaulter List");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
 
         JLabel sub = new JLabel("Identify students below the minimum attendance threshold.");
-        sub.setForeground(new Color(100, 116, 139));
+        sub.setForeground(HEADER_TEXT_COLOR);
 
         titleBox.add(title);
         titleBox.add(sub);
 
         header.add(titleBox, BorderLayout.WEST);
 
-        // Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnPanel.setBackground(new Color(246, 247, 248));
+        btnPanel.setBackground(BACKGROUND_COLOR);
         JButton btnPrint = new JButton("Print");
         btnPrint.setBackground(Color.WHITE);
         JButton btnExport = new JButton("Export");
@@ -60,27 +70,25 @@ public class DefaulterListPanel extends JPanel {
         btnPanel.add(btnExport);
         header.add(btnPanel, BorderLayout.EAST);
 
-        add(header, BorderLayout.NORTH);
+        return header;
+    }
 
-        // Content
+    private JPanel createContentPanel() {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBackground(new Color(246, 247, 248));
+        content.setBackground(BACKGROUND_COLOR);
 
-        // Filter Bar
         content.add(createFilterBar());
         content.add(Box.createRigidArea(new Dimension(0, 20)));
-
-        // Results
         content.add(createResultsPanel());
 
-        add(new JScrollPane(content), BorderLayout.CENTER);
+        return content;
     }
 
     private JPanel createFilterBar() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 20));
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240)));
+        panel.setBorder(BorderFactory.createLineBorder(CARD_BORDER_COLOR));
 
         // Course Select
         JPanel cPanel = new JPanel(new BorderLayout());
@@ -116,7 +124,7 @@ public class DefaulterListPanel extends JPanel {
     private JPanel createResultsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240)));
+        panel.setBorder(BorderFactory.createLineBorder(CARD_BORDER_COLOR));
 
         // Results Header
         JPanel rHeader = new JPanel(new BorderLayout());
@@ -175,9 +183,9 @@ public class DefaulterListPanel extends JPanel {
         countLabel.setText(defaulters.size() + " Defaulters Found");
 
         if (defaulters.size() > 0) {
-            countLabel.setForeground(new Color(225, 29, 72)); // Danger color
+            countLabel.setForeground(DANGER_COLOR);
         } else {
-            countLabel.setForeground(new Color(22, 163, 74)); // Green
+            countLabel.setForeground(SUCCESS_COLOR);
         }
     }
 
@@ -195,11 +203,11 @@ public class DefaulterListPanel extends JPanel {
                 JProgressBar pb = new JProgressBar(0, 100);
                 pb.setValue((int) val);
                 pb.setPreferredSize(new Dimension(80, 8));
-                pb.setForeground(val < 50 ? new Color(225, 29, 72) : new Color(249, 115, 22)); // Red or Orange
+                pb.setForeground(val < 50 ? DANGER_COLOR : WARNING_COLOR); // Red or Orange
 
                 JLabel l = new JLabel(String.format("%.1f%%", val));
                 l.setFont(new Font("Segoe UI", Font.BOLD, 12));
-                l.setForeground(val < 50 ? new Color(225, 29, 72) : new Color(249, 115, 22));
+                l.setForeground(val < 50 ? DANGER_COLOR : WARNING_COLOR);
 
                 p.add(pb);
                 p.add(l);
