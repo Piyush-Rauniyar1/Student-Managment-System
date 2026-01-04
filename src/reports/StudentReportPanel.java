@@ -8,6 +8,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+// This panel displays student reports
+// It extends JPanel to utilize Swing components
+// reportDAO is used to fetch report data
+// searchField allows users to search for specific students
+// resultPanel displays the results of the search
+// Various labels are defined to show student information
+// tableModel is used for managing the data in the table
+// Labels for total credits, attendance average, and GPA are defined
 public class StudentReportPanel extends JPanel {
     private ReportDAO reportDAO;
     private JTextField searchField;

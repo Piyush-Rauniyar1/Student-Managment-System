@@ -12,6 +12,13 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+// This panel displays attendance reports
+// It extends JPanel to utilize Swing components
+// courseDAO is used to manage course data
+// reportDAO is used to fetch attendance data
+// courseComboBox allows selection of courses
+// Various labels are defined to show attendance statistics
+// tableModel is used for managing the data in the table
 public class AttendanceReportPanel extends JPanel {
     private CourseDAO courseDAO;
     private ReportDAO reportDAO;
