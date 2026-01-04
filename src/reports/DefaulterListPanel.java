@@ -11,6 +11,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
+// This panel displays the list of defaulters
+// It extends JPanel to utilize Swing components
+// Constants for colors are defined for UI consistency
+// BACKGROUND_COLOR is used for the panel's background
+// CARD_BORDER_COLOR is used for card borders
+// HEADER_TEXT_COLOR is used for header text
+// DANGER_COLOR indicates critical alerts
+// SUCCESS_COLOR indicates successful operations
+// WARNING_COLOR indicates warnings
 public class DefaulterListPanel extends JPanel {
     private static final Color BACKGROUND_COLOR = new Color(246, 247, 248);
     private static final Color CARD_BORDER_COLOR = new Color(226, 232, 240);
